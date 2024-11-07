@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 7583640433812654122}
   - component: {fileID: 11756171794883783}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Weapon_Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -146,6 +146,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 5646165488041817916}
   switchchWeaponSFX: {fileID: 8300000, guid: 3c2a27d653a3bd248b0447dd932c4a33, type: 3}
+  shootType: 2
+  maxAmmo: 8
+  delayBetweenShots: 0.5
+  weaponMuzzle: {fileID: 2749496858225023403}
+  MuzzleFlashPrefab: {fileID: 0}
+  shootSfx: {fileID: 8300000, guid: fe100e0c948eda445bb7a304de576476, type: 3}
+  aimZoomRatio: 0.8
+  aimOffset: {x: 0, y: 0, z: 0}
+  crosshairDefault:
+    CrossHairSprite: {fileID: 21300000, guid: a690ec56120534446a338bdd7030201a, type: 3}
+    CrossHairSize: 100
+    CrossHairColor: {r: 0.49803925, g: 1, b: 0, a: 0.16470589}
+  crosshairTargetInSight:
+    CrossHairSprite: {fileID: 21300000, guid: a690ec56120534446a338bdd7030201a, type: 3}
+    CrossHairSize: 100
+    CrossHairColor: {r: 0.5254902, g: 0.9843138, b: 0.07450981, a: 1}
+  recoilForce: 0.5
+  projectilePrefab: {fileID: -5980918515024774505, guid: 0e23901b938cf4f4eb86850d912715eb,
+    type: 3}
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +176,7 @@ GameObject:
   - component: {fileID: 2990922162098195365}
   - component: {fileID: 2990922162094771079}
   - component: {fileID: 2990922162095900999}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Secondary_Weapon_Disc_Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +259,7 @@ GameObject:
   - component: {fileID: 2990922162098195367}
   - component: {fileID: 2990922162094771081}
   - component: {fileID: 2990922162095901001}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Secondary_Weapon_Disc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +342,7 @@ GameObject:
   - component: {fileID: 2990922162098195369}
   - component: {fileID: 2990922162094771083}
   - component: {fileID: 2990922162095901003}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Secondary_Weapon_Container_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +427,7 @@ GameObject:
   - component: {fileID: 2990922162098195371}
   - component: {fileID: 2990922162094771085}
   - component: {fileID: 2990922162095901005}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Secondary_Weapon_Container_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +512,7 @@ GameObject:
   - component: {fileID: 2990922162098195373}
   - component: {fileID: 2990922162094771087}
   - component: {fileID: 2990922162095901007}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Secondary_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,7 +594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2990922162098195375}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Mesh_Weapon_Secondary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +630,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1625833262181473822}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: GunRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +662,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2749496858225023403}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: GunMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -674,7 +693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 73920848663714073}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: PistonSocket (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5284107132194342034}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: PistonSocket (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,6 +775,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_GunCylinder_Secondary
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892127591187906997, guid: 40252b3901782c347a990f90ce729706,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6710091646203402432, guid: 40252b3901782c347a990f90ce729706,
         type: 3}
@@ -893,6 +917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -934,6 +963,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_GunCylinder_Secondary
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892127591187906997, guid: 40252b3901782c347a990f90ce729706,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6710091646203402432, guid: 40252b3901782c347a990f90ce729706,
         type: 3}
