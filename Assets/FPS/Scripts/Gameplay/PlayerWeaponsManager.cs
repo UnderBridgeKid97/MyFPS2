@@ -40,6 +40,10 @@ namespace Unity.FPS.Gameplay
         // 무기 교체 
         public UnityAction<WeaponController> OnSwitchToWeapon; // 무기 교체할때마다 등록된 함수 호출 
 
+        // 
+        public UnityAction<WeaponController,int> OnAddedWeapon;    // 무기 추가할때마다 등록된 함수 호출 
+        public UnityAction<WeaponController,int> OnRemoveWeapon;   // 장착된 무기가 제거 될 때마다  함수호출 
+
         private WeaponSwitchState weaponSwitchState;    // 무기 교체시 상태 
 
         // 핸들러 참조
@@ -407,16 +411,45 @@ namespace Unity.FPS.Gameplay
                     weaponInstance.SourcePrefab = weaponPrefab.gameObject;
                     weaponInstance.ShowWeapon(false);
 
-                    weaponSlots[i] = weaponInstance;  // null이면 빈슬롯에 들어감 
+                    // 무기장착
+                    OnAddedWeapon.Invoke(weaponInstance,i);
 
+                    weaponSlots[i] = weaponInstance;  // null이면 빈슬롯에 들어감 
                     return true;
                 }
             }
             Debug.Log("weaponSlots full!");
             return false;
         }
+        // WeaponSlots에 장착도니 무기 제거
+        public bool RemoveWeapon(WeaponController oldWeapon)
+        {
+            for(int i = 0; i < weaponSlots.Length; i ++)
+            {
+                // 같은 무기 찾기
+                if (weaponSlots[i] == oldWeapon)
+                {
+                    // 제거
+                    weaponSlots[i] = null;
 
-        // 매개변수로 들어온 
+                    OnRemoveWeapon?.Invoke(oldWeapon, i);
+
+                    Destroy(oldWeapon.gameObject);
+
+                    if(i == ActiveWeaponIndex)
+                    {
+                        SwitchWeapon(true);
+                    }
+                    return true;
+
+                }    
+            }
+            return false;
+        }
+
+
+
+        // 매개변수로 들어온 프리팹으로 만든 무기가 있는지 체크 
         private WeaponController HasWeapon(WeaponController weaponPrefab)
         {
             for (int i = 0; i < weaponSlots.Length; i++)

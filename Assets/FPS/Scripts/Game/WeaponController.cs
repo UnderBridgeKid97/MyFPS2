@@ -74,14 +74,19 @@ namespace Unity.FPS.Game
         public float recoilForce = 0.5f; // 반동이 되는 힘
 
         // Projectile
-        public Vector3 MuzzleWorldVelocity {  get; private set; }   
+        public Vector3 MuzzleWorldVelocity {  get; private set; }   // 현재 프레임의 총구 속도
         private Vector3 lastMuzzlePosition;                         // 마지막 총구 위치
         public float CurrentCharge {  get; private set; }
 
         // projectile
         public ProjectileBase projectilePrefab; // 프로젝타일 베이스를 상속받는 프리팹 
 
+        [SerializeField]private int bulletsPerShot = 1;         // 한번 슛하는데 발사되는 탄환의 개수 
+        [SerializeField]private float bulletSpreadAngle = 0f;                   // 불렛이 퍼져 나가는 각도 
         #endregion
+
+        public float CurrentAmmoRatio => currentAmmo / maxAmmo;
+
 
         private void Awake()
         {
@@ -92,6 +97,18 @@ namespace Unity.FPS.Game
         {
             currentAmmo = maxAmmo;
             lastTimeShot = Time.time; // 시작하자마자 쏠 수 있게
+            lastMuzzlePosition = weaponMuzzle.position;
+        }
+
+        private void Update()
+        {
+            //MuzzleWorldVelocity
+            if(Time.deltaTime > 0)
+            {
+                MuzzleWorldVelocity = (weaponMuzzle.position - lastMuzzlePosition) / Time.deltaTime;
+
+                lastMuzzlePosition = weaponMuzzle.position;
+            }
         }
 
         // 무기를 활성화, 비활성화
@@ -163,6 +180,22 @@ namespace Unity.FPS.Game
         // 슛 연출
         void HandleShoot()
         {
+            // projectile 생성
+            for(int i = 0; i < bulletsPerShot; i++)
+            {
+              Vector3 shotDirection = GetShotDirectionWithinSpread(weaponMuzzle);
+              ProjectileBase projectileInstance=  Instantiate(projectilePrefab, weaponMuzzle.position, Quaternion.LookRotation(shotDirection));
+                //  Destroy(projectileInstance.gameObject,3f);
+                projectileInstance.Shoot(this);
+            }
+
+          ; 
+
+
+
+
+
+
             // vfx
             if(MuzzleFlashPrefab) // 샷건은 머즐임펙트가 없으니까 있는지 물어봐야함
             {
@@ -178,8 +211,16 @@ namespace Unity.FPS.Game
 
             }
 
-
+            // 슛한 시간 저장
             lastTimeShot = Time.time;
+
+        }
+
+        // projectile 날아가는 방향
+        Vector3 GetShotDirectionWithinSpread(Transform shotTransform)
+        {
+            float spreadAngleRatio = bulletSpreadAngle / 180f;      // 
+            return Vector3.Lerp(shotTransform.forward, UnityEngine.Random.insideUnitSphere, spreadAngleRatio);
 
         }
     }
