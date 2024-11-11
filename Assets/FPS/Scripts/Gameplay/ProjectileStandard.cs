@@ -17,10 +17,10 @@ namespace Unity.FPS.Gameplay
         // 생성 
         private ProjectileBase projectileBase;
         private float maxLifeTime = 5f;
-
+        
         // 이동
-        [SerializeField]private float speed = 20f;
-        [SerializeField]private float gravityDown = 0f;
+        public float speed = 20f;
+        public float gravityDown = 0f;
         public Transform root;
         public Transform tip; // 프로젝타일 헤드
 
@@ -29,16 +29,19 @@ namespace Unity.FPS.Gameplay
         private float shotTime; // 
 
         // 충돌
-        private float radius = 0.01f;               // 충돌 검사하는 구체의 반경 
+        public float radius = 0.01f;               // 충돌 검사하는 구체의 반경 
         public LayerMask hittableLayers = -1;       // Hit가 가능한 Layer 지정 
         private List<Collider> ignoredColliders;    // Hit판정시 무시하는 충돌체 리스트 -> 이 콜라이더는 hit판정을 무시함
 
         // 충돌연출
         public GameObject impactVFXPrefab;                            // 타격 이펙트
-        [SerializeField] private float impactVFXlifeTime = 5f;  // 비쥬얼 효과
+        public float impactVFXlifeTime = 5f;  // 비쥬얼 효과
         private float impactVFXSpawmOffset = 0.1f;              // 오프셋 
 
         public AudioClip impactSFXClip;                         // 타격음 
+
+        // 데미지 
+        public float damage = 20f;
 
         #endregion
 
