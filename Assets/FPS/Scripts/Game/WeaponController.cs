@@ -94,6 +94,13 @@ namespace Unity.FPS.Game
 
         public float lastChargeTriggerTimeStamp;                          // 충전 시작 시간
 
+        // 리로드
+        [SerializeField] private float ammoReloadRate = 1f;         // 초당 재장전되는 량
+        [SerializeField]private float ammoReloadDelay = 2f;         // 슛한 다음 ammoReloadDelay가 지난 후에 재장전 가능 
+
+        [SerializeField]private bool automaticReload = true;    // 트루면 자동 펄스면 수동으로 장전
+
+
         #endregion
 
         public float CurrentAmmoRatio => currentAmmo / maxAmmo;
@@ -113,9 +120,9 @@ namespace Unity.FPS.Game
 
         private void Update()
         {
-            // 충전
-            UpdateCharge();
-
+            
+            UpdateCharge(); // 충전
+            UpdateAmmo();   // 자동 재장전
 
             //MuzzleWorldVelocity
             if(Time.deltaTime > 0)
@@ -126,6 +133,32 @@ namespace Unity.FPS.Game
             }
         }
         
+        // reload - auto
+        private void UpdateAmmo()
+        {
+            // 재장전 
+            if(automaticReload && currentAmmo < maxAmmo && IsCharging == false
+                && lastTimeShot + ammoReloadDelay < Time.time)
+            {
+            currentAmmo += ammoReloadRate * Time.deltaTime; // 초당 ammoloadrate 양만큼 재장전 
+            currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+            }
+
+        }
+
+
+        // reload - 수동
+        public void Reload()
+        {
+            if(automaticReload || currentAmmo >= maxAmmo || IsCharging)
+            {
+                return;
+            }
+            currentAmmo = maxAmmo;
+        }
+
+
+
         // 충전
         void UpdateCharge()
         {

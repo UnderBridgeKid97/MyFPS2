@@ -43,12 +43,15 @@ namespace Unity.FPS.Gameplay
         // 데미지 
         public float damage = 20f;
 
+        private DamageArea damageArea;
         #endregion
 
         private void OnEnable()
         {
             projectileBase = GetComponent<ProjectileBase>(); // 자기가 상속받고있는 부모 켓컴하기
             projectileBase.OnShoot += OnShoot;
+
+            damageArea = GetComponent<DamageArea>();    
 
             // kill
             Destroy(gameObject, maxLifeTime);
@@ -160,8 +163,23 @@ namespace Unity.FPS.Gameplay
         // Hit 구현, 데미지 판정, vfx, sfx ..
         void OnHit(Vector3 point, Vector3 normal, Collider collider) //위치 방향 콜라이더
         {
+            // 데미지
+            if(damageArea)
+            {
+                damageArea.InflicDamageArea(damage, point, hittableLayers, QueryTriggerInteraction.Collide, projectileBase.Owner);
+            }
+            else
+            {
+                Debug.Log($"damage:{damage}");
+                Damageable damageable = collider.GetComponent<Damageable>();
+                if (damageable)
+                {
+                    damageable.InflictDamage(damage, false, projectileBase.Owner);
+                }
+            }
+
             // vfx
-            if(impactVFXPrefab) // 임펙트가 있으면
+            if (impactVFXPrefab) // 임펙트가 있으면
             {
                GameObject impactObject = Instantiate(impactVFXPrefab, point + (normal * impactVFXSpawmOffset),
                    Quaternion.LookRotation(normal)); // 충돌 오브젝트에 오프셋을 약간 줘서 벽에 박혀 안보이는걸 방지

@@ -68,15 +68,19 @@ namespace Unity.FPS.Game
         // damageSource : 데미지를 주는 주체 ★ 
         public void TakeDamage(float damage, GameObject damageSource)
         {
+            
             // 무적 체크
             if (Invincible)
                 return;
+
+            Debug.Log($"damage:{damage}");
 
             float beforeHealth = CurrentHealtH; // 데미지 입기전의 hp
             
             CurrentHealtH -= damage;
 
             CurrentHealtH = Mathf.Clamp(CurrentHealtH, 0, maxHealth); // 0이하로 안떨어짐 0 이하값은 0으로 보정
+            Debug.Log($"hp:{CurrentHealtH}");
 
             // real데미지 구하기
             float realDamage = beforeHealth - CurrentHealtH;
@@ -94,7 +98,8 @@ namespace Unity.FPS.Game
         void HandleDeath()
         {
             // 죽음 상태 체크 / 이중 죽음 방지
-            if (isDeath) return;
+            if (isDeath)
+                return;
                 
             if(CurrentHealtH <= 0f)
             {

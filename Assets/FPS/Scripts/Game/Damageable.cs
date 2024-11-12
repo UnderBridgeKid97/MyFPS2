@@ -26,7 +26,7 @@ namespace Unity.FPS.Game
         {
             // 참조 
             health = GetComponent<Health>(); 
-            if(health = null) // 자기한테 못찾으면 & 없으면
+            if(health == null) // 자기한테 못찾으면 & 없으면
             {
                health = GetComponentInParent<Health>(); // 부모 객체에서 찾기 
             }
