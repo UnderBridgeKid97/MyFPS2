@@ -23,8 +23,8 @@ namespace Unity.FPS.Game
             DebugUtility.HandleErrorIfNullGetComponent<Health, Destructable>(Health, this,gameObject);
 
             // UnityAction event함수에 등록
-            Health.Ondie += Ondie; // health의 이벤트 함수 Ondie에 디스트럭터블 Ondie를 등록
             Health.OnDamaged += OnDamage; //  @@
+            Health.Ondie += Ondie; // health의 이벤트 함수 Ondie에 디스트럭터블 Ondie를 등록
 
         }
         // 예제
