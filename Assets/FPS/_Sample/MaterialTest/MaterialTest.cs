@@ -7,7 +7,7 @@ namespace MySample
     {
         #region Variables
 
-        private Renderer renderer;
+        private Renderer _renderer;
         private MaterialPropertyBlock materialPropertyBlock;
 
         #endregion
@@ -16,7 +16,7 @@ namespace MySample
         void Start()
         {
             // 참조
-            renderer = GetComponent<Renderer>();
+            _renderer = GetComponent<Renderer>();
 
             // 메테리얼 컬러 바꾸기
           //  renderer.material.SetColor("_BaseColor", Color.red);
@@ -24,7 +24,7 @@ namespace MySample
 
             materialPropertyBlock = new MaterialPropertyBlock();
             materialPropertyBlock.SetColor("_BaseColor", Color.red);
-            renderer.SetPropertyBlock(materialPropertyBlock);
+            _renderer.SetPropertyBlock(materialPropertyBlock);
 
         }
 
