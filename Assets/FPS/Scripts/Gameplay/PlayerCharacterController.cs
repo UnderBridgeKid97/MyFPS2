@@ -129,7 +129,12 @@ namespace Unity.FPS.Gameplay
 
         void Awake()
         {
-            
+            // ActorManager에 플레이어 등록
+            ActorManager actorManager = FindObjectOfType<ActorManager>();
+            if(actorManager) // 있으면
+            {
+                actorManager.SetPlayer(gameObject); // 플레이어라는 게임 오브젝트를 등록한 것 
+            }
         }
 
         void Start()

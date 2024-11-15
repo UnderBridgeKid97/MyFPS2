@@ -73,14 +73,14 @@ namespace Unity.FPS.Game
             if (Invincible)
                 return;
 
-            Debug.Log($"damage:{damage}");
+       //     Debug.Log($"damage:{damage}");
 
             float beforeHealth = CurrentHealtH; // 데미지 입기전의 hp
             
             CurrentHealtH -= damage;
 
             CurrentHealtH = Mathf.Clamp(CurrentHealtH, 0, maxHealth); // 0이하로 안떨어짐 0 이하값은 0으로 보정
-            Debug.Log($"hp:{CurrentHealtH}");
+          //  Debug.Log($"hp:{CurrentHealtH}");
 
             // real데미지 구하기
             float realDamage = beforeHealth - CurrentHealtH;
